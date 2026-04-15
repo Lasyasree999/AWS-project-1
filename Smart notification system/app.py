@@ -252,4 +252,4 @@ def ticket(booking_id):
 
 if __name__ == '__main__':
     # Run the app on all interfaces so it's accessible over the internet via EC2 Public IP
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
