@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { margin: 0; padding: 0; background-color: #f0f4f8; color: #333; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; background-color: #1a202c; padding: 15px 40px; color: white; }
+        .navbar h2 { margin: 0; font-size: 20px; }
+        .navbar a { color: #e2e8f0; text-decoration: none; font-weight: bold; background: #c53030; padding: 8px 15px; border-radius: 5px; }
+        .navbar a:hover { background: #9b2c2c; }
+        .container { max-width: 900px; margin: 40px auto; padding: 20px; }
+        .header { margin-bottom: 30px; }
+        .header h1 { color: #2d3748; }
+        .event-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .event-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 4px solid #3182ce; }
+        .event-card h3 { margin-top: 0; color: #2d3748; }
+        .event-card p { color: #718096; margin: 10px 0; }
+        .price { font-size: 20px; font-weight: bold; color: #38a169; }
+        .btn { display: block; width: 100%; text-align: center; background-color: #3182ce; color: white; padding: 10px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 15px; transition: 0.2s; }
+        .btn:hover { background-color: #2b6cb0; }
+        .no-events { text-align: center; color: #718096; padding: 40px; background: white; border-radius: 8px; }
+        .flash { background-color: #c6f6d5; color: #22543d; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>Welcome, {{ username }}!</h2>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="flash">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <div class="header">
+            <h1>Upcoming Events</h1>
+            <p>Select an event below to book your ticket.</p>
+        </div>
+
+        <div class="event-grid">
+            {% if events %}
+                {% for event in events %}
+                <div class="event-card">
+                    <h3>{{ event.event_name }}</h3>
+                    <p>📅 Date: {{ event.event_date }}</p>
+                    <p class="price">💰 ${{ event.price }}</p>
+                    <a href="/payment/{{ event.event_id }}" class="btn">Book Now</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-events">
+                    <h3>No events available right now.</h3>
+                    <p>Please check back later.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

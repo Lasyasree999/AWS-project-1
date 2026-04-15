@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Ticket</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { margin: 0; padding: 40px 20px; background-color: #f0f4f8; display: flex; flex-direction: column; align-items: center; }
+        .success-msg { color: #38a169; font-size: 24px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .ticket-card { background: white; width: 100%; max-width: 450px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden; border: 2px dashed #cbd5e0; position: relative; }
+        .ticket-header { background: #2d3748; color: white; padding: 25px; text-align: center; }
+        .ticket-header h2 { margin: 0; font-size: 26px; letter-spacing: 1px; }
+        .ticket-body { padding: 30px; }
+        .ticket-row { display: flex; flex-direction: column; margin-bottom: 20px; }
+        .ticket-row label { font-size: 12px; color: #a0aec0; text-transform: uppercase; font-weight: bold; margin-bottom: 5px; }
+        .ticket-row span { font-size: 18px; color: #2d3748; font-weight: 600; }
+        .divider { height: 1px; background: #e2e8f0; margin: 20px 0; }
+        .barcode { text-align: center; margin-top: 10px; }
+        .barcode div { height: 40px; background: repeating-linear-gradient(90deg, #2d3748, #2d3748 3px, transparent 3px, transparent 6px, #2d3748 6px, #2d3748 8px, transparent 8px, transparent 12px); width: 80%; margin: 0 auto; }
+        .barcode p { margin-top: 10px; font-family: monospace; letter-spacing: 3px; color: #4a5568; }
+        .actions { margin-top: 30px; display: flex; gap: 15px; }
+        .btn { padding: 12px 25px; border-radius: 5px; text-decoration: none; font-weight: bold; text-align: center; transition: 0.2s; }
+        .btn-primary { background: #3182ce; color: white; }
+        .btn-primary:hover { background: #2b6cb0; }
+        .btn-secondary { background: white; color: #4a5568; border: 1px solid #cbd5e0; }
+        .btn-secondary:hover { background: #edf2f7; }
+    </style>
+</head>
+<body>
+
+    <div class="success-msg">
+        🎉 Payment Successful!
+    </div>
+
+    <div class="ticket-card">
+        <div class="ticket-header">
+            <h2>ADMIT ONE</h2>
+        </div>
+        <div class="ticket-body">
+            <div class="ticket-row">
+                <label>Event Name</label>
+                <span>{{ booking.event_name }}</span>
+            </div>
+            
+            <div class="ticket-row">
+                <label>Attendee Name</label>
+                <span>{{ booking.username }}</span>
+            </div>
+
+            <div style="display: flex; gap: 40px;">
+                <div class="ticket-row" style="flex: 1;">
+                    <label>Amount Paid</label>
+                    <span style="color: #38a169;">${{ booking.price }}</span>
+                </div>
+                <div class="ticket-row" style="flex: 1;">
+                    <label>Status</label>
+                    <span>{{ booking.status }}</span>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="barcode">
+                <div></div>
+                <p>{{ booking.booking_id }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="javascript:window.print()" class="btn btn-primary">🖨️ Print Ticket</a>
+        <a href="/user_dashboard" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

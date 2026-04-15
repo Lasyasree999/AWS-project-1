@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { margin: 0; padding: 0; background-color: #f0f4f8; color: #333; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; background-color: #2d3748; padding: 15px 40px; color: white; border-bottom: 4px solid #805ad5; }
+        .navbar h2 { margin: 0; font-size: 20px; }
+        .navbar a { color: white; text-decoration: none; font-weight: bold; background: #c53030; padding: 8px 15px; border-radius: 5px; }
+        .container { max-width: 900px; margin: 40px auto; padding: 20px; display: grid; grid-template-columns: 1fr 2fr; gap: 30px; }
+        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h3 { color: #2d3748; margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid #edf2f7; padding-bottom: 10px; }
+        form { display: flex; flex-direction: column; }
+        label { margin-bottom: 5px; font-weight: bold; color: #4a5568; font-size: 14px; }
+        input { margin-bottom: 15px; padding: 10px; border: 1px solid #cbd5e0; border-radius: 5px; font-size: 14px; }
+        button { background-color: #805ad5; color: white; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { background-color: #6b46c1; }
+        .event-list { list-style: none; padding: 0; margin: 0; }
+        .event-list li { background: #f7fafc; padding: 15px; border: 1px solid #e2e8f0; border-radius: 5px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .badge { background: #38a169; color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .flash { background-color: #c6f6d5; color: #22543d; padding: 15px; border-radius: 5px; margin-bottom: 20px; grid-column: span 2; }
+        
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>Admin Control Panel</h2>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="flash">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <div class="card">
+            <h3>➕ Add New Event</h3>
+            <form action="/admin" method="POST">
+                <label for="event_name">Event Name</label>
+                <input type="text" id="event_name" name="event_name" required placeholder="e.g. AWS Summit">
+                
+                <label for="event_date">Event Date</label>
+                <input type="date" id="event_date" name="event_date" required>
+                
+                <label for="price">Ticket Price ($)</label>
+                <input type="number" id="price" name="price" required min="0" step="0.01" placeholder="e.g. 99.99">
+                
+                <button type="submit">Create Event</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3>📋 Current Events Database</h3>
+            <ul class="event-list">
+                {% if events %}
+                    {% for event in events %}
+                    <li>
+                        <div>
+                            <strong>{{ event.event_name }}</strong><br>
+                            <small style="color: #718096;">ID: {{ event.event_id }} | Date: {{ event.event_date }}</small>
+                        </div>
+                        <span class="badge">${{ event.price }}</span>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li style="justify-content: center; color: #718096;">No events created yet.</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
