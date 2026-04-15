@@ -20,7 +20,7 @@ ADMIN_PASSWORD = 'password123'
 AWS_REGION = 'ap-south-1'
 
 # TODO: Replace this with your actual SNS Topic ARN from AWS
-SNS_TOPIC_ARN = 'arn:aws:sns:us-east-1:123456789012:EventNotifications' 
+SNS_TOPIC_ARN = 'arn:aws:sns:ap-south-1:330905068578:Events' 
 
 # Initialize Boto3 Clients
 # Note: Because this runs on EC2 with an IAM Role, we don't need access keys here.
@@ -32,8 +32,8 @@ sns_client = boto3.client('sns', region_name=AWS_REGION)
 # 2. Events Table (The "Admin table" where Admin adds events)
 # 3. Bookings Table (Stores user ticket purchases)
 USERS_TABLE = dynamodb.Table('Users')
-EVENTS_TABLE = dynamodb.Table('admin')
-BOOKINGS_TABLE = dynamodb.Table('EventMetadata')
+EVENTS_TABLE = dynamodb.Table('Events')
+BOOKINGS_TABLE = dynamodb.Table('Bookings')
 
 
 # ==========================================
