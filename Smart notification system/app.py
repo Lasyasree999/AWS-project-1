@@ -32,8 +32,8 @@ sns_client = boto3.client('sns', region_name=AWS_REGION)
 # 2. Events Table (The "Admin table" where Admin adds events)
 # 3. Bookings Table (Stores user ticket purchases)
 USERS_TABLE = dynamodb.Table('Users')
-EVENTS_TABLE = dynamodb.Table('Events')
-BOOKINGS_TABLE = dynamodb.Table('Bookings')
+EVENTS_TABLE = dynamodb.Table('admin')
+BOOKINGS_TABLE = dynamodb.Table('EventMetadata')
 
 
 # ==========================================
